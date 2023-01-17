@@ -4,18 +4,19 @@ metadata:
   name: account-service
   namespace: production-deployment
 spec:
-  replicas: 1
+  replicas: 4
   selector:
     matchLabels:
       app: springboot-app
   template:
     metadata:
-    labels:
+      labels:
         app: springboot-app
     spec:
       containers:
       - name: account-service
         image: 353258999787.dkr.ecr.us-east-1.amazonaws.com/account_service_microservice:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 2222
           protocol: TCP
@@ -23,16 +24,18 @@ spec:
         image: library/mongo
         ports:
         - containerPort: 27017
-          protocol: TCP	
+          protocol: TCP	    
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: account-service
-  namespace: production-deployment
-spec:
-  selector:
+  labels:
     app: springboot-app
+    k8s-app: springboot-app
+    name: account-service
+    namespace: production-deployment
+  
+spec:
   ports:
     - name: port1
       protocol: TCP
