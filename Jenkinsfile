@@ -52,7 +52,7 @@ pipeline {
             }
             steps {
                 withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'K8S', namespace: '', serverUrl: '') {
-                sh "kubectl apply -f eks-account-service.yaml"
+                sh "kubectl apply -f account-service-prod.yaml.yaml"
             }
           }
           post{
