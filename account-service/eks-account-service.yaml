@@ -5,10 +5,13 @@ metadata:
   namespace: production-deployment
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: springboot-app
   template:
     metadata:
-      labels:
-        run: account-service
+    labels:
+        app: springboot-app
     spec:
       containers:
       - name: account-service
