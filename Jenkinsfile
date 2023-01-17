@@ -18,7 +18,7 @@ pipeline {
         
         stage('Build Jar') {
             steps {
-                sh "mvn clean install"
+                sh "mvn -f account-service clean install"
             }
         }
      
