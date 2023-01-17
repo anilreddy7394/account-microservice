@@ -66,7 +66,7 @@ pipeline {
        }
        stage('K8S Deploy to staging') {
             when {
-                branch 'devlopment'
+                branch 'development'
             }
             steps {
                 withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'K8S', namespace: '', serverUrl: '') {
