@@ -1,20 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: account-service
+  name: account-app
   namespace: production-deployment
   labels:
-    run: account-service
+    app: account
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: account
   template:
     metadata:
       labels:
-        run: account-service
+        app: account
     spec:
       containers:
-      - name: account-service
+      - name: account
         image: 353258999787.dkr.ecr.us-east-1.amazonaws.com/account_service_microservice:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 2222
           protocol: TCP
@@ -23,15 +27,17 @@ spec:
         ports:
         - containerPort: 27017
           protocol: TCP	
+# service type loadbalancer       
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: account-service
+  name: account
   namespace: production-deployment
+  labels:
+    app: account
+    service: account
 spec:
-  selector:
-    run: account-service
   ports:
     - name: port1
       protocol: TCP
@@ -41,4 +47,6 @@ spec:
       protocol: TCP
       port: 27017
       targetPort: 27017
-  type: NodePort
+  selector:
+    app: account
+    type: nodeport
